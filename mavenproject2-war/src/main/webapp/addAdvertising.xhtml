@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:outputLabel value="Добавление рекламы"/>
+    <h:form>
+        Название: <h:inputText value="#{AdvertisingBean.advertising.name}" id="name"/><br/>
+        Категория: <h:inputText value="#{AdvertisingBean.advertising.category}" id="category"/><br/>
+        Цена: <h:inputText value="#{AdvertisingBean.advertising.price}" id="price"/><br/>
+        Краткое описание: <h:inputText value="#{AdvertisingBean.advertising.briefDescription}"
+                                       id="briefDescription"/><br/>
+        Полное описание: <h:inputText value="#{AdvertisingBean.advertising.fullDescription}" id="fullDescription"/><br/>
+        Реклама:
+        <h:selectManyMenu value="#{AdvertisingBean.selectedCampaigns}" style="height: 70px">
+            <f:selectItems value="#{CampaignBean.allCampaigns}" var="camp" itemValue="#{camp.id}"
+                           itemLabel="#{camp.name}"/>
+        </h:selectManyMenu>
+        <br/>
+        <h:commandButton value="Добавить ректаму" action="#{AdvertisingBean.addAdvertising}"/>
+    </h:form>
+</f:view>
+</html>
