@@ -2,6 +2,7 @@ package DAO;
 
 import Entity.Campaign2;
 
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,6 +31,12 @@ public class CampaignDAO2Impl implements CampaignDAO2, Serializable {
     @Override
     public void editCampaign(Campaign2 cmp) {
         em.merge(cmp);
+    }
+
+    @Override
+    public void editCampaignWithException(Campaign2 cmp) throws EJBException  {
+        em.merge(cmp);
+        throw new EJBException();
     }
 
     @Override

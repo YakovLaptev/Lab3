@@ -14,6 +14,7 @@ public interface CampaignDAO {
     void addCampaign(Campaign cmp);
     void editCampaign(Campaign cmp);
     void deleteCampaign(Long id);
+    void editCampaignWithRollback(Campaign cmp);
     Campaign getById(Long id);
     List<Campaign> getAllCampaigns();
 }

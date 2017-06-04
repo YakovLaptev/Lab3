@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import javax.ejb.*;
 
 /**
- *
  * @author Yakov
  */
 @Stateless
@@ -32,10 +31,10 @@ public class TransactExperimentsManager {
         sb = new StringBuilder();
         Campaign campaign = campaignDAO.getById(1L);
         sb.append("До: " + campaign.toString());
-        campaign.setPrice(campaign.getPrice()+3000);
+        campaign.setPrice(campaign.getPrice() + 3000);
         changeCampaignPrice(campaign);
         campaignDAO.editCampaign(campaign);
-        sb.append(" После: " + campaignDAO.getById(campaign.getId()).toString() + " " + campaignDAO2.getById(campaign.getId()).toString());
+        sb.append(" После: " + campaignDAO.getById(campaign.getId()) + " " + campaignDAO.getById(campaign.getId()).toString());
         return sb.toString();
     }
 
@@ -46,31 +45,30 @@ public class TransactExperimentsManager {
         campaignDAO2.editCampaign(campaign2);
     }
 
-//    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-//    public String secondTransactionExperiment() {
-//        Sportsman s = sb.findAllSportsmen().get(0);
-//        s.setAccuracy(s.getAccuracy() - 0.01F);
-//        reduceAccuracy(s);
-//        sb.editSportsman(s);
-//        scontext.setRollbackOnly();
-//        return "Success2";
-//    }
-//
-//    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-//    public String thirdTransactionExperiment() {
-//        try {
-//            Sportsman s = sb.findAllSportsmen().get(0);
-//            s.setAccuracy(s.getAccuracy() - 0.01F);
-//            sb.editSportsman(s);
-//            reduceAccuracyWithException(s);
-//        } catch (EJBException ex) {
-//            scontext.setRollbackOnly();
-//            return "Success3";
-//        }
-//        return "Not-success3";
-//
-//    }
-//
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public String secondTransactionExperiment() {
+        Campaign campaign = campaignDAO.getById(1L);
+        campaign.setPrice(campaign.getPrice() + 5000);
+        campaignDAO.editCampaignWithRollback(campaign);
+        return !sessionContext.getRollbackOnly() ? "Rollback was not" : "Rollback was";
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public String thirdTransactionExperiment() {
+        try {
+            Campaign campaign = campaignDAO.getById(1L);
+            campaign.setPrice(campaign.getPrice() + 3000);
+            Campaign2 campaign2 = campaignDAO2.getById(campaign.getId());
+            campaign2.setPrice(campaign.getPrice());
+            campaignDAO.editCampaign(campaign);
+            campaignDAO2.editCampaignWithException(campaign2);
+        } catch (EJBException ex) {
+            return "Вызвано исключение.";
+        }
+        return "Исключение не было вызвано";
+
+    }
+
 //    @TransactionAttribute(TransactionAttributeType.MANDATORY)
 //    private void reduceAccuracyWithException(Sportsman s) throws EJBException {
 //        SportsmanDetails details = sdf.find(s.getId());

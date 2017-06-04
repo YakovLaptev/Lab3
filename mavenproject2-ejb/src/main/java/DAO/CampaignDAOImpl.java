@@ -2,6 +2,8 @@ package DAO;
 
 import Entities.Campaign;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,6 +23,8 @@ public class CampaignDAOImpl implements CampaignDAO, Serializable {
 
     @PersistenceContext(unitName = "mavenproject2-ejbPU")
     private EntityManager em;
+    @Resource
+    private SessionContext context;
 
     @Override
     public void addCampaign(Campaign cmp) {
@@ -36,6 +40,12 @@ public class CampaignDAOImpl implements CampaignDAO, Serializable {
     public void deleteCampaign(Long id) {
         Campaign cmp = em.find(Campaign.class, id);
         em.remove(cmp);
+    }
+
+    @Override
+    public void editCampaignWithRollback(Campaign cmp) {
+        em.merge(cmp);
+        context.setRollbackOnly();
     }
 
     @Override

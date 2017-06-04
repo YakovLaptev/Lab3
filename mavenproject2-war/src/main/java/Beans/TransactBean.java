@@ -18,5 +18,18 @@ public class TransactBean implements Serializable {
     public String getFirstTransactionExperiment() {
         return experimentsManager.firstTransactionExperiment();
     }
+    public String getSecondTransactionExperiment() {
+        return experimentsManager.secondTransactionExperiment();
+    }
+    public String getThirdTransactionExperiment() {
+        return experimentsManager.thirdTransactionExperiment();
+    }
+    public String getFourthTransactionExperiment() {
+        return experimentsManager.secondTransactionExperiment();
+    }
+    public String getFifthTransactionExperiment() {
+        return experimentsManager.firstTransactionExperiment();
+    }
+
 
 }
