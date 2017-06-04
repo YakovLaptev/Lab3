@@ -25,10 +25,10 @@ public class TransactBean implements Serializable {
         return experimentsManager.thirdTransactionExperiment();
     }
     public String getFourthTransactionExperiment() {
-        return experimentsManager.secondTransactionExperiment();
+        return experimentsManager.fourthTransactionExperiment();
     }
     public String getFifthTransactionExperiment() {
-        return experimentsManager.firstTransactionExperiment();
+        return experimentsManager.fifthTransactionExperiment();
     }
 
 

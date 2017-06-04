@@ -34,7 +34,7 @@ public class TransactExperimentsManager {
         campaign.setPrice(campaign.getPrice() + 3000);
         changeCampaignPrice(campaign);
         campaignDAO.editCampaign(campaign);
-        sb.append(" После: " + campaignDAO.getById(campaign.getId()) + " " + campaignDAO.getById(campaign.getId()).toString());
+        sb.append(" После: Бд1: " + campaignDAO.getById(campaign.getId()) + " Бд2: " + campaignDAO.getById(campaign.getId()).toString());
         return sb.toString();
     }
 
@@ -69,47 +69,43 @@ public class TransactExperimentsManager {
 
     }
 
-//    @TransactionAttribute(TransactionAttributeType.MANDATORY)
-//    private void reduceAccuracyWithException(Sportsman s) throws EJBException {
-//        SportsmanDetails details = sdf.find(s.getId());
-//        details.setAccuracy(s.getAccuracy());
-//        sdf.edit(details);
-//        throw new EJBException();
-//    }
-//
-//    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-//    public String fourthTransactionExperiment() {
-//
-//        Sportsman s = sb.findAllSportsmen().get(0);
-//        s.setAccuracy(s.getAccuracy() - 0.01F);
-//        sb.editSportsman(s);
-//        reduceAccuracyNotSupported(s);
-//        scontext.setRollbackOnly();
-//        return "Success4";
-//
-//    }
-//
-//    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-//    private void reduceAccuracyNotSupported(Sportsman s) {
-//        SportsmanDetails details = sdf.find(s.getId());
-//        details.setAccuracy(s.getAccuracy());
-//        sdf.edit(details);
-//    }
-//
-//    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-//    public String fifthTransactionExperiment() {
-//
-//        Sportsman s = sb.findAllSportsmen().get(0);
-//        s.setAccuracy(s.getAccuracy() - 0.01F);
-//        sb.editSportsman(s);
-//        reduceAccuracyRequiresNew(s);
-//        sessionContext.setRollbackOnly();
-//        return "Success5";
-//
-//    }
-//
-//    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-//    private void reduceAccuracyRequiresNew(Sportsman s) {
-//        reduceAccuracy(s);
-//    }
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public String fourthTransactionExperiment() {
+        sb = new StringBuilder();
+        Campaign campaign = campaignDAO.getById(1L);
+        sb.append("До: " + campaign.toString());
+        campaign.setPrice(campaign.getPrice() + 5000);
+        campaignDAO.editCampaignWithRollback(campaign);
+        changeCampaignPriceWithRequired(campaign);
+        sb.append(" После: Бд1: " + campaignDAO.getById(campaign.getId()) + " Бд2: " + campaignDAO2.getById(campaign.getId()).toString());
+        return sb.toString();
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    private void changeCampaignPriceWithRequired(Campaign campaign) {
+        Campaign2 campaign2 = campaignDAO2.getById(campaign.getId());
+        campaign2.setPrice(campaign.getPrice());
+        campaignDAO2.editCampaign(campaign2);
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public String fifthTransactionExperiment() {
+        try {
+            Campaign2 campaign2 = campaignDAO2.getById(1L);
+            campaign2.setPrice(campaign2.getPrice()+3000);
+            changeCampaignPriceWithRequiresNew(campaign2);
+            campaignDAO2.editCampaignWithException(campaign2);
+        } catch (EJBException ex) {
+            return "Вызвано исключение.";
+        }
+        return "Исключение не было вызвано";
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    private void changeCampaignPriceWithRequiresNew(Campaign2 campaign2) {
+        Campaign campaign = campaignDAO.getById(campaign2.getId());
+        campaign.setPrice(campaign2.getPrice());
+    }
+
 }
