@@ -11,7 +11,8 @@ import java.util.List;
  */
 @Local
 public interface CampaignDAO {
-    void addCampaign(Campaign adv);
+    void addCampaign(Campaign cmp);
+    void editCampaign(Campaign cmp);
     void deleteCampaign(Long id);
     Campaign getById(Long id);
     List<Campaign> getAllCampaigns();

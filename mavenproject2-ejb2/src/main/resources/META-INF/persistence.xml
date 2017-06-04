@@ -2,20 +2,18 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="mavenproject2-ejbPU" transaction-type="JTA">
-        <jta-data-source>jdbc/advag</jta-data-source>
-        <class>Entities.Advertising</class>
-        <class>Entities.Order</class>
-        <class>Entities.Campaign</class>
+    <persistence-unit name="mavenproject2-ejbPU2" transaction-type="JTA">
+        <jta-data-source>jdbc/advag2</jta-data-source>
+        <class>Entity.Campaign2</class>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
             <property name="hibernate.transaction.jta.platform"
                       value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/advag"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/advag2"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

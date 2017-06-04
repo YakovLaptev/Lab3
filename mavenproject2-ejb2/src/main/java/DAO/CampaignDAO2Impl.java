@@ -1,6 +1,6 @@
 package DAO;
 
-import Entities.Campaign;
+import Entity.Campaign2;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,39 +17,40 @@ import java.util.List;
  * @author Yakov
  */
 @Stateless
-public class CampaignDAOImpl implements CampaignDAO, Serializable {
+public class CampaignDAO2Impl implements CampaignDAO2, Serializable {
 
-    @PersistenceContext(unitName = "mavenproject2-ejbPU")
+    @PersistenceContext(unitName = "mavenproject2-ejbPU2")
     private EntityManager em;
 
     @Override
-    public void addCampaign(Campaign cmp) {
+    public void addCampaign(Campaign2 cmp) {
         em.persist(cmp);
     }
 
     @Override
-    public void editCampaign(Campaign cmp) {
+    public void editCampaign(Campaign2 cmp) {
         em.merge(cmp);
     }
 
     @Override
     public void deleteCampaign(Long id) {
-        Campaign cmp = em.find(Campaign.class, id);
+        Campaign2 cmp = em.find(Campaign2.class, id);
         em.remove(cmp);
     }
 
     @Override
-    public Campaign getById(Long id) {
-        return em.find(Campaign.class, id);
+    public Campaign2 getById(Long id) {
+        return em.find(Campaign2.class, id);
     }
 
     @Override
-    public List<Campaign> getAllCampaigns() {
+    public List<Campaign2> getAllCampaigns() {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Campaign> selectAllQuery = criteriaBuilder.createQuery(Campaign.class);
-        Root<Campaign> root = selectAllQuery.from(Campaign.class);
+        CriteriaQuery<Campaign2> selectAllQuery = criteriaBuilder.createQuery(Campaign2.class);
+        Root<Campaign2> root = selectAllQuery.from(Campaign2.class);
         selectAllQuery.select(root);
-        TypedQuery<Campaign> selectAllCampaignQuery = em.createQuery(selectAllQuery);
+        TypedQuery<Campaign2> selectAllCampaignQuery = em.createQuery(selectAllQuery);
         return selectAllCampaignQuery.getResultList();
     }
+
 }

@@ -12,6 +12,7 @@
         <module>mavenproject2-war</module>
         <module>mavenproject2-ejb</module>
         <module>mavenproject2-ear</module>
+        <module>mavenproject2-ejb2</module>
     </modules>
     <dependencies>
         <dependency>

@@ -22,7 +22,7 @@ public class CampaignBean implements Serializable {
 
     public String addCampaing() {
         campaignDAO.addCampaign(campaign);
-        return "advertising";
+        return "campaigns";
     }
     
     public List<Campaign> getAllCampaigns() {
@@ -31,7 +31,7 @@ public class CampaignBean implements Serializable {
 
     public String deleteCampaignById(Long id) {
         campaignDAO.deleteCampaign(id);
-        return "advertising";
+        return "campaigns";
     }
 
     public Campaign getCampaign() {

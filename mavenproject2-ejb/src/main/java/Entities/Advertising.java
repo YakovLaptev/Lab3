@@ -66,14 +66,8 @@ public class Advertising implements Serializable {
 
     @Override
     public String toString() {
-        return "Advertising{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", briefDescription='" + briefDescription + '\'' +
-                ", fullDescription='" + fullDescription + '\'' +
-                ", ordersList=" + ordersList +
+        return "Реклама{" +
+                name +
                 '}';
     }
 
